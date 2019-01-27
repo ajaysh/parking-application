@@ -19,7 +19,7 @@ python mange.py migrate
 python manage.py runserver
 ```
 
-##  @TODO:##  
+##  @TODO:   
 1. Advanced visualization. 
 2. Advanced authentication and authorization.
 
