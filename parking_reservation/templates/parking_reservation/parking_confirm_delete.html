@@ -1,0 +1,12 @@
+{% extends "parking_reservation/parking_reservation_base.html" %}
+{% block body_block %}
+  <h1>Delete {{parking.slot_name}}?</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-danger" value="Delete">
+    <!-- NOTE: here we must pass the pk=parking.pk because in the parking_reservation:detail view, in urls.py
+    the regex expects a primary key value (pk) -->
+    <a href="{% url 'parking_reservation:detail' pk=parking.pk %}">Cancel</a>
+  </form>
+{% endblock %}

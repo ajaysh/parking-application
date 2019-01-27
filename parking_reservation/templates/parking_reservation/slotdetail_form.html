@@ -1,0 +1,16 @@
+{% extends "parking_reservation/parking_reservation_base.html" %}
+{% block body_block %}
+  <h1>
+    {% if not form.instance.pk %}
+      Create Parkingslot
+    {% else %}
+      Update Parkingslot
+    {% endif %}
+  </h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" name="btn btn-primary" value="Submit">
+  </form>
+{% endblock %}

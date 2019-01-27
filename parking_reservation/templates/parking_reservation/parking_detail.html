@@ -1,0 +1,53 @@
+{% extends 'parking_reservation/parking_reservation_base.html' %}
+
+{% block body_block %}
+<div class="jumbotron">
+  <h2>Parking Details are:</h2>
+  <p>Locality: {{parking_detail.locality}}
+     Lane: {{parking_detail.lane}}
+     Slot: {{parking_detail.slot_name}}
+</p>
+
+  <h3>SlotDetail</h3>
+  <!-- NOTE: the parking_list is the context_object_name we provided in parking_reservation/views.py
+    The tricky part here is the parking_detail.slotDetails . This is the related_name on SlotDetails.
+    It is like going to the SQL and query for all students in that particular parking, since parking
+  is a ForeignKey for the SlotDetails.  -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Reserved</th>
+        <th>Reserve/Cancel</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for slotdetails in parking_detail.slotDetails.all %}
+      <tr>
+        <td>{{slotdetails.start_date}}</td>
+        <td>{{slotdetails.end_date}}</td>
+
+        {% if slotdetails.reserved %}
+        <td>Yes</td>
+        <td><a class="btn btn-warning" href="{% url 'parking_reservation:updateslot' pk=slotdetails.pk%}">Cancel</a></td>
+        {% else %}
+        <td>No</td>
+        <td><a class="btn btn-success" href="{% url 'parking_reservation:updateslot' pk=slotdetails.pk%}">Reserve</a></td>
+        {% endif %}
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a class="btn btn-warning" href="{% url 'parking_reservation:createslot'%}">Add</a>
+
+</div>
+
+<div class="container">
+  <p><a class="btn btn-warning" href="{% url 'parking_reservation:update' pk=parking_detail.pk%}">Update</a></p>
+  <a class="btn btn-danger" href="{% url 'parking_reservation:delete' pk=parking_detail.pk%}">Delete</a>
+
+</div>
+
+{% endblock %}
